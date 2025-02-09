@@ -2,8 +2,13 @@ import requests
 import pandas as pd
 
 # ✅ 確保 header=None 避免把第一行當標題
-df = pd.read_excel("C:/Users/user/lotto-auto/Lotto_Data_New.xlsx", sheet_name="最佳號碼", header=None, engine="openpyxl")
-latest_numbers = df.iloc[-1].tolist()
+import os
+
+# 確保程式可以在 GitHub Actions 運行
+file_path = "Lotto_Data_New.xlsx" if os.getenv("GITHUB_ACTIONS") else "C:/Users/user/lotto-auto/Lotto_Data_New.xlsx"
+
+df = pd.read_excel(file_path, sheet_name="最佳號碼", header=None, engine="openpyxl")
+
 
 # ✅ 確保數據完整
 if len(latest_numbers) < 7:
