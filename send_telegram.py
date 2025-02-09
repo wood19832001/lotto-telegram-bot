@@ -6,9 +6,12 @@ import pandas as pd
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
-# ✅ 檢查 `BOT_TOKEN` 和 `CHAT_ID` 是否設置正確
-if not BOT_TOKEN or not CHAT_ID:
-    print("❌ 錯誤：BOT_TOKEN 或 CHAT_ID 未設定，請檢查 GitHub Secrets！")
+# ✅ 檢查 `BOT_TOKEN` 和 `CHAT_ID` 是否設定
+if not BOT_TOKEN:
+    print("❌ 錯誤：BOT_TOKEN 未設定，請檢查 GitHub Secrets！")
+    exit()
+if not CHAT_ID:
+    print("❌ 錯誤：CHAT_ID 未設定，請檢查 GitHub Secrets！")
     exit()
 
 # ✅ **正確的 Telegram API URL**
