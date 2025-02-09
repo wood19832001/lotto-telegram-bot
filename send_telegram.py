@@ -28,7 +28,7 @@ if not BOT_TOKEN or not CHAT_ID:
     print("❌ 錯誤：BOT_TOKEN 或 CHAT_ID 未設定，請檢查 GitHub Secrets！")
     exit()
 
-# ✅ 正確的 Telegram API URL
+# ✅ **正確的 Telegram API URL**
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
 # ✅ 發送到 Telegram
