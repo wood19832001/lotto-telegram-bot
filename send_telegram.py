@@ -2,8 +2,13 @@ import requests
 import pandas as pd
 
 # ✅ 確保 header=None 避免把第一行當標題
-df = pd.read_excel("C:/Users/user/lotto-auto/Lotto_Data_New.xlsx", sheet_name="最佳號碼", header=None, engine="openpyxl")
-latest_numbers = df.iloc[-1].tolist()
+import os
+
+# 確保程式可以在 GitHub Actions 運行
+file_path = "Lotto_Data_New.xlsx" if os.getenv("GITHUB_ACTIONS") else "C:/Users/user/lotto-auto/Lotto_Data_New.xlsx"
+
+df = pd.read_excel(file_path, sheet_name="最佳號碼", header=None, engine="openpyxl")
+
 
 # ✅ 確保數據完整
 if len(latest_numbers) < 7:
@@ -15,8 +20,8 @@ message = f"🎯 最新一期六合彩最佳號碼：\n🔢 {', '.join(map(str, 
 print(f"📤 發送訊息到 Telegram：\n{message}")  # 🛠️ 偵錯用
 
 # ✅ 發送到 Telegram
-TELEGRAM_API_URL = f"https://api.telegram.org/bot8013909094:AAHBvNV2AoC5nF3geYjsA6n9mZmHDK9UEhg/sendMessage"
-data = {"chat_id": -4750893132, "text": message}
+TELEGRAM_API_URL = f"https://api.telegram.org/botos.getenv("BOT_TOKEN")/sendMessage"
+data = {"chat_id": os.getenv("CHAT_ID"), "text": message}
 response = requests.post(TELEGRAM_API_URL, data=data)
 
 print(f"📡 伺服器回應：{response.status_code}")  # 🛠️ 偵錯用
