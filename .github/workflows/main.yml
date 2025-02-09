@@ -1,0 +1,27 @@
+name: Auto Send Telegram Lotto Numbers
+
+on:
+  schedule:
+    - cron: '0 20 * * 2,5'  # 每週二和週五晚上 8:00（UTC 時間）
+  workflow_dispatch:  # 允許手動觸發
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 檢出儲存庫
+        uses: actions/checkout@v3
+
+      - name: 設定 Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 安裝必要套件
+        run: pip install requests pandas openpyxl gspread oauth2client
+
+      - name: 執行 Python 腳本
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python send_telegram.py
