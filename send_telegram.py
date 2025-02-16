@@ -32,8 +32,11 @@ except Exception as e:
     print(f"❌ 錯誤：讀取 Excel 失敗！\n{str(e)}")
     exit()
 
-# ✅ 取得最後一行數據（確保是「最後 7 個數字」）
-latest_numbers = df.iloc[-1].dropna().tolist()[-7:]
+# ✅ 只保留數字欄位（過濾掉 ID 和日期）
+df = df.select_dtypes(include=["number"])
+
+# ✅ 取得最後一行數據（確保是 6 個普通號碼 + 1 個特別號）
+latest_numbers = df.iloc[-1].dropna().astype(int).tolist()[-7:]
 
 # ✅ 確保數據完整（必須是 6 個普通號碼 + 1 個特別號）
 if len(latest_numbers) != 7:
