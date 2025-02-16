@@ -32,8 +32,9 @@ except Exception as e:
     print(f"❌ 錯誤：讀取 Excel 失敗！\n{str(e)}")
     exit()
 
-# ✅ 只保留數字欄位（過濾掉 ID 和日期）
-df = df.select_dtypes(include=["number"])
+# ✅ **確保數據格式正確，移除非數字欄位**
+df = df.select_dtypes(include=["number"])  # 只保留數字列
+df = df.apply(pd.to_numeric, errors='coerce')  # 轉換為數字，避免錯誤
 
 # ✅ 取得最後一行數據（確保是 6 個普通號碼 + 1 個特別號）
 latest_numbers = df.iloc[-1].dropna().astype(int).tolist()[-7:]
